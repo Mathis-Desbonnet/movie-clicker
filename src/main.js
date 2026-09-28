@@ -5,6 +5,6 @@ import game from './store/modules/game.js'
 
 const app = createApp(App)
 
-app.use(router)
 app.use(game)
+app.use(router)
 app.mount('#app')

@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
+import player from './player'
 
 export default createStore({
+  modules: { player },
   state: {
     movies: 0,
     autoProduction: 0,
@@ -16,6 +18,7 @@ export default createStore({
         price: 100,
       },
     ],
+    admin: false,
   },
   mutations: {
     add1Movies(state) {
@@ -33,6 +36,15 @@ export default createStore({
       state.movies -= state.upgrades[indexOfUpgrade].price
       state.upgrades[indexOfUpgrade].price *= 1.15
     },
+    loadGame(state, data) {
+      state.movies = data.movies
+      state.autoProduction = data.autoProduction
+      for (let i = 0; i < data.upgradesPrice.length; i++) {
+        state.upgrades[i].price = data.upgradesPrice[i]
+      }
+      state.admin = data.admin
+      console.log(data)
+    },
   },
   actions: {
     async addAutoMovies({ commit }) {
@@ -41,11 +53,13 @@ export default createStore({
   },
   getters: {
     movies: (state) => Math.round(state.movies),
+    autoProductionFullNumber: (state) => state.autoProduction,
     autoProduction: (state) => state.autoProduction.toFixed(2),
     upgrades: (state) => state.upgrades,
     timeToProduce1Movie: (state) => {
       if (state.autoProduction == 0) return -1
       return 1000 / state.autoProduction
     },
+    admin: (state) => state.admin,
   },
 })
