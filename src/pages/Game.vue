@@ -66,5 +66,4 @@ function onLoad() {
   >
     {{ upgrade.name }} -- {{ upgrade.value }}/s -- {{ Math.round(upgrade.price) }} movies
   </button>
-  {{ timeToProduce1Movie }}
 </template>
